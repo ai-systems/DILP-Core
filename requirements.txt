@@ -1,5 +1,5 @@
 numpy
-scip
+scipy
 tensorflow
 ray
 pandas
