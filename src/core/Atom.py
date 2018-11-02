@@ -3,14 +3,14 @@
 
 
 class Atom():
-    def __init__(self, terms: list, name: str):
+    def __init__(self, terms: list, predicate: str):
         '''
         Arguments:
             terms {list} -- List of of terms defining atom
             name {str} -- name of the predicate
         '''
         self._terms = terms
-        self._name = name
+        self._predicate = predicate
 
     @property
     def terms(self):
@@ -21,9 +21,13 @@ class Atom():
         self._terms = value
 
     @property
-    def name(self):
-        return self._name
+    def predicate(self):
+        return self._predicate
 
-    @name.setter
-    def name(self, value):
-        self._name = value
+    @predicate.setter
+    def predicate(self, value):
+        self._predicate = value
+
+    @property
+    def arity(self):
+        return len(self._terms)
