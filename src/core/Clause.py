@@ -1,6 +1,6 @@
 '''Defines the clauses
 '''
-import Atom
+from src.core.atom import Atom
 
 
 class Clause():
@@ -18,8 +18,8 @@ class Clause():
     def body(self):
         return self._body
 
-    @boddy.setter
-    def boddy(self, value):
+    @body.setter
+    def body(self, value):
         self._body = value
 
     @property

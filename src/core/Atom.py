@@ -3,7 +3,6 @@
 
 
 class Atom():
-
     def __init__(self, terms: list, name: str):
         '''
         Arguments:
@@ -17,8 +16,8 @@ class Atom():
     def terms(self):
         return self._terms
 
-    @listTerm.setter
-    def listTerm(self, value):
+    @terms.setter
+    def terms(self, value):
         self._terms = value
 
     @property
