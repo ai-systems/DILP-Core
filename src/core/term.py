@@ -13,6 +13,15 @@ class Term():
         self._isVariable = isVariable
         self._name = name
 
+    def __str__(self):
+        return self._name
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __eq__(self, other):
+        return self._isVariable == other.isVariable and self._name == other.name
+
     @property
     def isVariable(self):
         return self._isVariable

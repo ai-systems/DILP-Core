@@ -14,6 +14,15 @@ class Clause():
         self._head = head
         self._body = body
 
+    def __str__(self):
+        return '%s -> %s' % (str(self._head), ','.join(str(atom) for atom in self._body))
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __eq__(self, other):
+        return all([(atom in other.body) for atom in self._body]) and all([(atom in self._body) for atom in other.body])
+
     @property
     def body(self):
         return self._body

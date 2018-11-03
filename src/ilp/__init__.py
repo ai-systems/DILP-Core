@@ -3,6 +3,7 @@
 from src.ilp.language_frame import Language_Frame
 from src.ilp.rule_template import Rule_Template
 from src.ilp.program_template import Program_Template
+from src.ilp.rule_manager import Rule_Manger
 
 
 class ILP():
