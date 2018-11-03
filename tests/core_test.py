@@ -66,16 +66,10 @@ def program_template_test():
     rule_template = Rule_Template(1, True)
     try:
         program_template = Program_Template(
-            [atom1], [(atom1, (rule_template, rule_template))], 300)
-        assert False
-    except ValueError as err:
-        assert True
-    try:
-        program_template = Program_Template(
-            [atom3], [(atom1, (rule_template, rule_template))], 300)
+            [atom1], (rule_template, rule_template), 300)
         assert False
     except ValueError as err:
         assert True
 
     program_template = Program_Template(
-        [atom3], [(atom3, (rule_template, rule_template))], 300)
+        [atom3], (rule_template, rule_template), 300)

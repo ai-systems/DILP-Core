@@ -1,5 +1,6 @@
 '''Defines the atom class
 '''
+import collections
 
 
 class Atom():
@@ -11,6 +12,15 @@ class Atom():
         '''
         self._terms = terms
         self._predicate = predicate
+
+    def __str__(self):
+        return "%s(%s)" % (self._predicate, ','.join([str(name) for name in self._terms]))
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __eq__(self, other):
+        return self._terms == other.terms and self._predicate == other.predicate
 
     @property
     def terms(self):
