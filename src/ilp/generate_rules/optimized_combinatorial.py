@@ -18,11 +18,11 @@ class Optimized_Combinatorial_Generator(Rule_Manger):
             logger.info('Generating clauses')
             clauses = []
             if(rule.allow_intensional):
-                p = self.p_e + self.p_a + [self.target]
-                p_i = self.p_a + [self.target]
+                p = list(set(self.p_e + self.p_a + [self.target]))
+                p_i = list(set(self.p_a + [self.target]))
                 intensional_predicates = [atom.predicate for atom in p_i]
             else:
-                p = self.p_e
+                p = list(set(self.p_e))
             variables = ['X_%d' %
                          i for i in range(0, self.target.arity + rule.v)]
             target_variables = ['X_%d' %
