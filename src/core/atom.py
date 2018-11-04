@@ -12,6 +12,7 @@ class Atom():
         '''
         self._terms = terms
         self._predicate = predicate
+        self._variables = set([term.name for term in terms])
 
     def __str__(self):
         return "%s(%s)" % (self._predicate, ','.join([str(name) for name in self._terms]))
@@ -21,6 +22,9 @@ class Atom():
 
     def __eq__(self, other):
         return self._terms == other.terms and self._predicate == other.predicate
+
+    def __hash__(self):
+        return hash(str(self))
 
     @property
     def terms(self):
@@ -41,3 +45,16 @@ class Atom():
     @property
     def arity(self):
         return len(self._terms)
+
+    @property
+    def variables(self):
+        return self._variables
+
+    def is_same_predicate(self, other):
+        '''Checks equality of predicate
+
+        Arguments:
+            other {Atom} -- Atom to check predicate equality
+        '''
+
+        return self._predicate == other.predicate

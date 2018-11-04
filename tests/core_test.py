@@ -32,6 +32,21 @@ def core_test():
     assert clause.body == [atom2]
 
 
+def equality_test():
+    term1 = Term(True, 'X_0')
+    term2 = Term(True, 'X_1')
+    atom1 = Atom([term1, term1], 'p')
+    atom2 = Atom([term1, term2], 'p')
+    head = Atom([term1, term2], 'q')
+    clause1 = Clause(head, [atom1, atom2])
+    clause2 = Clause(head, [atom2, atom1])
+    pred_dict = {}
+    pred_dict[clause1] = 1
+    pred_dict[clause2] = 1
+    assert clause1 == clause2
+    assert len(pred_dict) == 1
+
+
 def utils_test():
     assert is_intensional(atom1) == False
     assert is_intensional(atom2) == False

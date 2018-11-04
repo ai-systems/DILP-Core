@@ -22,6 +22,9 @@ class Term():
     def __eq__(self, other):
         return self._isVariable == other.isVariable and self._name == other.name
 
+    def __hash__(self):
+        return hash(str(self))
+
     @property
     def isVariable(self):
         return self._isVariable
