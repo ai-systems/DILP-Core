@@ -44,3 +44,10 @@ class Clause():
     @head.setter
     def head(self, value):
         self._head = value
+
+    @property
+    def variables(self):
+        '''Return all the variable used in the clause
+        '''
+
+        return self._variable
