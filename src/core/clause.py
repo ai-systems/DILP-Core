@@ -1,6 +1,7 @@
 '''Defines the clauses
 '''
 from src.core.atom import Atom
+from functools import reduce
 
 
 class Clause():
@@ -13,6 +14,8 @@ class Clause():
         '''
         self._head = head
         self._body = body
+        self._variable = sorted(list(head.variables.union(
+            set(reduce(set.union, [atom.variables for atom in body])))))
 
     def __str__(self):
         return '%s -> %s' % (str(self._head), ','.join(str(atom) for atom in self._body))
@@ -22,6 +25,9 @@ class Clause():
 
     def __eq__(self, other):
         return all([(atom in other.body) for atom in self._body]) and all([(atom in self._body) for atom in other.body])
+
+    def __hash__(self):
+        return hash(str("head-%s body_pred-%s variables-%s" % (self._head.predicate, ','.join(atom.predicate for atom in self._body), ','.join(self._variable))))
 
     @property
     def body(self):
