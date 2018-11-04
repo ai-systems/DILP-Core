@@ -28,7 +28,7 @@ class Language_Frame():
         self._target = target
         self._p_e = p_e
         self._arity = arity
-        self._constants = constants
+        self._constants = list(constants)
 
     @property
     def target(self):
