@@ -9,15 +9,6 @@ from functools import reduce
 
 class Inference():
 
-    def __init__(self, clauses: list, valuation: list):
-        '''
-
-        Arguments:
-            clauses {list} -- generate clauses
-            valuation {list} -- valuation list
-        '''
-        self.clauses = clauses
-
     @staticmethod
     def f_c(clause: Clause, valuations: list, constants: list):
         '''

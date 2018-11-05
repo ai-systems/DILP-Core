@@ -24,7 +24,7 @@ class Clause():
         return self.__str__()
 
     def __eq__(self, other):
-        return all([(atom in other.body) for atom in self._body]) and all([(atom in self._body) for atom in other.body])
+        return all([(atom in other.body) for atom in self._body]) and all([(atom in self._body) for atom in other.body]) and self._head == other.head
 
     def __hash__(self):
         return hash(str("head-%s body_pred-%s variables-%s" % (self._head.predicate, ','.join(atom.predicate for atom in self._body), ','.join(self._variable))))

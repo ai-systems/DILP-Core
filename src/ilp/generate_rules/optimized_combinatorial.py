@@ -15,11 +15,14 @@ class Optimized_Combinatorial_Generator(Rule_Manger):
         '''
         rule_matrix = []
         for rule in self.rules:
-            logger.info('Generating clauses')
+            # logger.info('Generating clauses')
+            if rule == None:
+                rule_matrix.append([])
+                continue
             clauses = []
             if(rule.allow_intensional):
-                p = list(set(self.p_e + self.p_a + [self.target]))
-                p_i = list(set(self.p_a + [self.target]))
+                p = list(set(self.p_e + self.p_i + [self.target]))
+                p_i = list(set(self.p_i))
                 intensional_predicates = [atom.predicate for atom in p_i]
             else:
                 p = list(set(self.p_e))
@@ -48,7 +51,7 @@ class Optimized_Combinatorial_Generator(Rule_Manger):
                             body1 = Atom([b1[index]
                                           for index in range(0, pred1.arity)], pred1.predicate)
                             body2 = Atom([b2[index]
-                                          for index in range(0, pred1.arity)], pred2.predicate)
+                                          for index in range(0, pred2.arity)], pred2.predicate)
 
                             clause = Clause(head, [body1, body2])
                             # logger.info(clause)
@@ -66,5 +69,5 @@ class Optimized_Combinatorial_Generator(Rule_Manger):
                                 added_pred[clause] = 1
                                 clauses.append(clause)
             rule_matrix.append(clauses)
-            logger.info('Clauses Generated')
+            # logger.info('Clauses Generated')
         return rule_matrix
