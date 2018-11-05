@@ -39,9 +39,14 @@ class ILP():
         # Build ground atoms
         ground_atoms = []
         ground_atoms.append(Atom([], '⊥'))
+        added_atoms = {}
         for pred in p:
             for term in constant_matrix:
-                ground_atoms.append(Atom(term, pred.predicate))
+                atom = Atom([term[i]
+                             for i in range(0, pred.arity)], pred.predicate)
+                if atom not in added_atoms:
+                    ground_atoms.append(atom)
+                    added_atoms[atom] = 1
         return ground_atoms
 
     def convert(self):

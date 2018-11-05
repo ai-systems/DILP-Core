@@ -57,5 +57,4 @@ class Inference():
                 z_c[valuation[0]] = max(derived_valuation[valuation[0]])
             else:
                 z_c[valuation[0]] = 0.0
-
         return z_c
