@@ -6,7 +6,7 @@ from utils import is_intensional, INTENSIONAL_REQUIRED_MESSAGE
 
 class Program_Template():
 
-    def __init__(self, p_a: list, rules: tuple, T: int):
+    def __init__(self, p_a: list, rules: dict, T: int):
         '''
         Arguments:
             p_a {list} -- set of auxiliary predicates; these are the additional invented predicates used to help define the target predicate
