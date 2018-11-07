@@ -29,6 +29,9 @@ def even_numbers_test():
     program_template = Program_Template(p_a, rules, 300)
 
     dilp = DILP(langage_frame, B, P, N, program_template)
-#     dilp.train()
+    dilp.train()
 
     assert False
+
+
+even_numbers_test()

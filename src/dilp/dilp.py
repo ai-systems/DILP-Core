@@ -178,14 +178,14 @@ class DILP():
             losses.append(loss_avg)
             print("-" * 20)
             print("step " + str(i) + " loss is " + str(loss_avg))
-            if i % 5 == 0:
-                valuation_dict = self.valuation2atoms(self.deduction()).items()
-                for atom, value in valuation_dict:
-                    print(str(atom) + ": " + str(value))
-                if name:
-                    checkpoint.save(checkpoint_prefix)
-                    pd.Series(np.array(losses)).to_csv(name + ".csv")
-            print("-" * 20 + "\n")
+            # if i % 5 == 0:
+            #     valuation_dict = self.valuation2atoms(self.deduction()).items()
+            #     for atom, value in valuation_dict:
+            #         print(str(atom) + ": " + str(value))
+            #     if name:
+            #         checkpoint.save(checkpoint_prefix)
+            #         pd.Series(np.array(losses)).to_csv(name + ".csv")
+            # print("-" * 20 + "\n")
         return losses
 
     def memoized_fc(self, memoize: dict, clause: Clause, valuation):

@@ -48,6 +48,5 @@ class Combinatorial_Generator(Rule_Manger):
                                     # duplicate
                                     if clause not in clauses:
                                         clauses.append(clause)
-            print(clauses)
             rule_matrix.append(clauses)
         return rule_matrix
