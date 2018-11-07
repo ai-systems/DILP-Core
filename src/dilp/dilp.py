@@ -65,7 +65,7 @@ class DILP():
                 rule_manager = Optimized_Combinatorial_Generator(
                     self.program_template.p_a + [self.language_frame.target], self.program_template.rules[p], p, self.language_frame.p_e)
                 self.generated[p] = rule_manager.generate_clauses()
-                self.rule_weights[p] = tf.get_variable(p.name + "_rule_weights",
+                self.rule_weights[p] = tf.get_variable(p.predicate + "_rule_weights",
                                                        [len(self.generated[p][0]), len(
                                                            self.generated[p][1])],
                                                        initializer=tf.random_normal_initializer,
