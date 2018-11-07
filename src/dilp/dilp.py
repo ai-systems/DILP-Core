@@ -109,7 +109,8 @@ class DILP():
                 index += 1
         rule_weights = tf.reshape(rule_weights, [-1])
         prob_rule_weights = tf.nn.softmax(rule_weights)[:, None]
-        val = tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0)
+        val = tf.reduce_sum(tf.multiply(
+            (tf.stack(c_p), prob_rule_weights)), axis=0)
         return val
 
     def inference_step(self, valuation):
