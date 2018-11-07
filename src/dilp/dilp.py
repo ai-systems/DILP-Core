@@ -80,8 +80,7 @@ class DILP():
         # Generate clauses for each intensional predicate
         # updated_f_c = {}
         valuation = []
-        print(valuation_list.shape)
-        for i in range(0, len(valuation_list)):
+        for i in range(0, valuation_list.shape(0)):
             valuation.append((self.base_valuation_map[i], valuation_list[i]))
 
         memoize = {}
@@ -123,7 +122,7 @@ class DILP():
 
     def deduction(self):
         # takes background as input and return a valuation of target ground atoms
-        valuation = self.base_valuation
+        valuation = np.array(self.base_valuation)
         for _ in range(self.program_template.T):
             valuation = self.inference_step(valuation)
         return valuation
