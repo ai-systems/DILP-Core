@@ -37,12 +37,11 @@ class DILP():
         self.__init_training_data(positive, negative)
         self.base_valuation = []
         self.base_valuation_map = {}
-        self.base_valuation_map_inv = {}
         index = 0
         for val in self.initial_valuation:
             self.base_valuation.append(val[1])
             self.base_valuation_map[val[0]] = index
-            self.base_valuation_map_inv[index] = val[0]
+            self.base_valuation_map[index] = val[0]
             index += 1
         self.base_valuation = np.array(self.base_valuation)
 
@@ -73,13 +72,16 @@ class DILP():
                                                        initializer=tf.random_normal_initializer,
                                                        dtype=tf.float64)
 
-    def inference_single_predicate(self, p, valuation, rule_weights):
+    def inference_single_predicate(self, p, valuation_list, rule_weights):
         '''Train the model
         '''
         # convert ground atoms to initial evalutaions
 
         # Generate clauses for each intensional predicate
         # updated_f_c = {}
+        valuation = []
+        for i in range(0, len(valuation_list)):
+            valuation.append((self.base_valuation_map[i], valuation_list[i]))
 
         memoize = {}
         c_p = []
@@ -201,6 +203,6 @@ class DILP():
             return ({}, memoize)
         if clause not in memoize:
             f_c = Inference.f_c(clause, valuation,
-                                self.language_frame.constants, self.base_valuation_map_inv)
+                                self.language_frame.constants)
             memoize[clause] = f_c
         return (memoize[clause], memoize)

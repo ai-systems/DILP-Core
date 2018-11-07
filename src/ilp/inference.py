@@ -10,7 +10,7 @@ from functools import reduce
 class Inference():
 
     @staticmethod
-    def f_c(clause: Clause, valuations: list, constants: list, base_map: {}):
+    def f_c(clause: Clause, valuations: list, constants: list):
         '''
 
         Arguments:
@@ -26,8 +26,8 @@ class Inference():
             for c in constant_terms:
                 temp.append((var, c))
             comb.append(temp)
-        dict_valuation = {base_map[i]:
-                          valuations[i] for i in range(0, len(valuations))}
+        dict_valuation = {valuations[i][0]:
+                          valuations[i][1] for i in range(0, len(valuations))}
         derived_valuation = defaultdict(list)
         derived_valuation2 = defaultdict(list)
         for elm in product(*comb):
@@ -43,9 +43,9 @@ class Inference():
                 round(reduce(lambda a, b: a * b, derived, 1), 6))
             derived_valuation2[substituted_head].append(derived)
         z_c = {}
-        for atom in base_map:
-            if(atom in derived_valuation):
-                z_c[atom] = max(derived_valuation[atom])
+        for valuation in valuations:
+            if(valuation[0] in derived_valuation):
+                z_c[valuation[0]] = max(derived_valuation[valuation[0]])
             else:
-                z_c[atom] = 0.0
+                z_c[valuation[0]] = 0.0
         return z_c
