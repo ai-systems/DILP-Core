@@ -113,6 +113,7 @@ class DILP():
         for p in [self.language_frame.target] + self.program_template.p_a:
             deduced_valuation += self.inference_single_predicate(p,
                                                                  valuation,  self.rule_weights[p])
+            print(deduced_valuation)
         y = []
         for val in valuation:
             y.append(val[1])
