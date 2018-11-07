@@ -17,7 +17,7 @@ class Optimized_Combinatorial_Generator(Rule_Manger):
         for rule in self.rules:
             # logger.info('Generating clauses')
             if rule == None:
-                rule_matrix.append([])
+                rule_matrix.append([None])
                 continue
             clauses = []
             if(rule.allow_intensional):
