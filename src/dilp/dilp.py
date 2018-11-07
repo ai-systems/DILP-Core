@@ -123,7 +123,8 @@ class DILP():
         return valuation
 
     def loss(self, batch_size=-1):
-        labels = np.array(self.training_data.values(), dtype=np.float32)
+        labels = np.array(list(self.training_data.values())
+                          [1], dtype=np.float32)
         outputs = tf.gather(self.deduction(), np.array(
             self.training_data.keys(), dtype=np.int32))
         if batch_size > 0:
