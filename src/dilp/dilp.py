@@ -90,7 +90,7 @@ class DILP():
             for clause2 in generated[1]:
                 (fc_2, memoize) = self.memoized_fc(
                     memoize, clause2, valuation)
-                c_p_val = tf.zeros(len(self.base_valuation))
+                c_p_val = np.zeros(len(self.base_valuation))
                 for key in set(list(fc_1.keys()) + list(fc_2.keys())):
                     fc_1_i = 0
                     fc_2_i = 0
