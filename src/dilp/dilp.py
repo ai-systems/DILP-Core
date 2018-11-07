@@ -36,7 +36,7 @@ class DILP():
         self.training_data = OrderedDict()  # index to label
         self.__init_training_data
         self.base_valuation = []
-        self.base_valuation_map = []
+        self.base_valuation_map = {}
         index = 0
         for val in self.initial_valuation:
             self.base_valuation.append(val[0])
