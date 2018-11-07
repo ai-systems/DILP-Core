@@ -40,12 +40,12 @@ class Inference():
                                          for term in atom.terms], atom.predicate)
                 derived.append(dict_valuation[substituted_body])
             derived_valuation[substituted_head].append(
-                reduce(lambda a, b: a * b, derived, 1), 6)
+                reduce(lambda a, b: a * b, derived, 1)
             derived_valuation2[substituted_head].append(derived)
-        z_c = {}
+        z_c={}
         for valuation in valuations:
             if(valuation[0] in derived_valuation):
-                z_c[valuation[0]] = max(derived_valuation[valuation[0]])
+                z_c[valuation[0]]=max(derived_valuation[valuation[0]])
             else:
-                z_c[valuation[0]] = 0
+                z_c[valuation[0]]=0
         return z_c
