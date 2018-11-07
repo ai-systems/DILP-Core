@@ -40,7 +40,7 @@ class Inference():
                                          for term in atom.terms], atom.predicate)
                 derived.append(dict_valuation[substituted_body])
             derived_valuation[substituted_head].append(
-                round(reduce(lambda a, b: a * b, derived, 1), 6))
+                reduce(lambda a, b: a * b, derived, 1), 6)
             derived_valuation2[substituted_head].append(derived)
         z_c = {}
         for valuation in valuations:
