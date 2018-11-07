@@ -72,18 +72,13 @@ class DILP():
                                                        initializer=tf.random_normal_initializer,
                                                        dtype=tf.float32)
 
-    def inference_single_predicate(self, p, valuation_list, rule_weights):
+    def inference_single_predicate(self, p, valuation, rule_weights):
         '''Train the model
         '''
         # convert ground atoms to initial evalutaions
 
         # Generate clauses for each intensional predicate
         # updated_f_c = {}
-        valuation = []
-        for i in range(0, valuation_list.shape[0]):
-            valuation.append((self.base_valuation_map[i], valuation_list[i]))
-            print(type(valuation_list[i]))
-
         memoize = {}
         c_p = []
         index = 0
@@ -110,8 +105,7 @@ class DILP():
                 index += 1
         rule_weights = tf.reshape(rule_weights, [-1])
         prob_rule_weights = tf.nn.softmax(rule_weights)[:, None]
-        val = tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0)
-        return val
+        return tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0)
 
     def inference_step(self, valuation):
         deduced_valuation = tf.zeros(len(self.initial_valuation))
@@ -123,9 +117,14 @@ class DILP():
 
     def deduction(self):
         # takes background as input and return a valuation of target ground atoms
-        valuation = np.array(self.base_valuation)
+        valuation = self.initial_valuation
         for _ in range(self.program_template.T):
-            valuation = self.inference_step(valuation)
+            updated_score = self.inference_step(valuation)
+            updated_valuation = []
+            for i in range(0, len(valuation)):
+                updated_valuation.append((valuation[i][0], updated_score[i]))
+            valuation = updated_valuation
+
         return valuation
 
     def loss(self, batch_size=-1):
