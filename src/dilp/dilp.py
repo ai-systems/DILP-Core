@@ -34,7 +34,7 @@ class DILP():
                   self.positive, self.negative, self.program_template)
         self.initial_valuation = ilp.convert()
         self.training_data = OrderedDict()  # index to label
-        self.__init_training_data
+        self.__init_training_data(positive, negative)
         self.base_valuation = []
         self.base_valuation_map = {}
         index = 0
@@ -46,9 +46,8 @@ class DILP():
 
         # self.base_valuation = np.array(
         # [val[0] for val in self.initial_valuation], dtype=np.float32)
-        self.__init__rule_weights()
-        self.rule_weights = OrderedDict()
         self.generated = {}
+        self.rule_weights = OrderedDict()
         self.__init__rule_weights()
 
     def __init_training_data(self, positive, negative):
