@@ -69,7 +69,7 @@ class DILP():
                                                        [len(self.generated[p][0]), len(
                                                            self.generated[p][1])],
                                                        initializer=tf.random_normal_initializer,
-                                                       dtype=tf.float32)
+                                                       dtype=tf.float64)
 
     def inference_single_predicate(self, p, valuation, rule_weights):
         '''Train the model
@@ -124,7 +124,7 @@ class DILP():
 
     def loss(self, batch_size=-1):
         labels = np.array(list(self.training_data.values())
-                          [1], dtype=np.float32)
+                          [1], dtype=np.float64)
         outputs = tf.gather(self.deduction(), np.array(
             self.training_data.keys(), dtype=np.int32))
         if batch_size > 0:
