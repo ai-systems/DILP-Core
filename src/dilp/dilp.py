@@ -55,7 +55,7 @@ class DILP():
         for val in self.initial_valuation:
             if val[0] in self.positive:
                 self.training_data[i] = 1.0
-            elif val[1] in self.negative:
+            elif val[0] in self.negative:
                 self.training_data[i] = 0.0
             i += 1
 
