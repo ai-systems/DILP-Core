@@ -39,7 +39,7 @@ class DILP():
         self.base_valuation_map = {}
         index = 0
         for val in self.initial_valuation:
-            self.base_valuation.append(val[0])
+            self.base_valuation.append(val)
             self.base_valuation_map[val[0]] = index
             index += 1
         self.base_valuation = np.array(self.base_valuation)
