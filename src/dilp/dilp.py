@@ -128,7 +128,7 @@ class DILP():
             updated_valuation = []
             for i in range(0, len(valuation)):
                 updated_valuation.append(
-                    (valuation[i][0], tf.to_float(updated_score[i][1])))
+                    (valuation[i][0], tf.to_float(updated_score[i])))
             valuation = updated_valuation
 
         return valuation
