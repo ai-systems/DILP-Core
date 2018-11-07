@@ -80,6 +80,7 @@ class DILP():
         # Generate clauses for each intensional predicate
         # updated_f_c = {}
         valuation = []
+        print(valuation_list.shape)
         for i in range(0, len(valuation_list)):
             valuation.append((self.base_valuation_map[i], valuation_list[i]))
 
