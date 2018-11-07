@@ -82,6 +82,7 @@ class DILP():
         valuation = []
         for i in range(0, valuation_list.shape[0]):
             valuation.append((self.base_valuation_map[i], valuation_list[i]))
+            print(type(valuation_list[i]))
 
         memoize = {}
         c_p = []
