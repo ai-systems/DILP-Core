@@ -127,7 +127,8 @@ class DILP():
             updated_score = self.inference_step(valuation)
             updated_valuation = []
             for i in range(0, len(valuation)):
-                updated_valuation.append((valuation[i][0], updated_score[i]))
+                updated_valuation.append(
+                    (valuation[i][0], tf.to_float(updated_score[i])))
             valuation = updated_valuation
 
         return valuation
