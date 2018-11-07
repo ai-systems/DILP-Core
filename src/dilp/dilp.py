@@ -113,7 +113,6 @@ class DILP():
         for p in [self.language_frame.target] + self.program_template.p_a:
             deduced_valuation += self.inference_single_predicate(p,
                                                                  valuation,  self.rule_weights[p])
-            print(deduced_valuation)
         y = []
         for val in valuation:
             y.append(val[1])
@@ -124,6 +123,7 @@ class DILP():
         # takes background as input and return a valuation of target ground atoms
         valuation = self.initial_valuation
         for _ in range(self.program_template.T):
+            print(valuation)
             updated_score = self.inference_step(valuation)
             updated_valuation = []
             for i in range(0, len(valuation)):
