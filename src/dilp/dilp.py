@@ -37,10 +37,12 @@ class DILP():
         self.__init_training_data(positive, negative)
         self.base_valuation = []
         self.base_valuation_map = {}
+        self.base_valuation_map_inv = {}
         index = 0
         for val in self.initial_valuation:
-            self.base_valuation.append(val)
+            self.base_valuation.append(val[1])
             self.base_valuation_map[val[0]] = index
+            self.base_valuation_map_inv[index] = val[0]
             index += 1
         self.base_valuation = np.array(self.base_valuation)
 
@@ -82,7 +84,7 @@ class DILP():
         memoize = {}
         c_p = []
         index = 0
-        clause_map = {}
+        self.clause_map = {}
         generated = self.generated[p]
         for clause1 in generated[0]:
             (fc_1, memoize) = self.memoized_fc(
@@ -101,11 +103,11 @@ class DILP():
                     c_p_val[self.base_valuation_map[key]] = (
                         max(fc_1_i, fc_2_i))
                 c_p.append(c_p_val)
-                clause_map[index] = (clause1, clause2)
+                self.clause_map[index] = (clause1, clause2)
                 index += 1
         rule_weights = tf.reshape(rule_weights, [-1])
         prob_rule_weights = tf.nn.softmax(rule_weights)[:, None]
-        return (clause_map, tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0))
+        return tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0)
 
     def inference_step(self, valuation):
         deduced_valuation = tf.zeros(len(self.initial_valuation))
@@ -199,6 +201,6 @@ class DILP():
             return ({}, memoize)
         if clause not in memoize:
             f_c = Inference.f_c(clause, valuation,
-                                self.language_frame.constants)
+                                self.language_frame.constants, self.base_valuation_map_inv)
             memoize[clause] = f_c
         return (memoize[clause], memoize)
