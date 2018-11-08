@@ -36,13 +36,16 @@ class DILP():
         ilp = ILP(self.language_frame, self.background,
                   self.positive, self.negative, self.program_template)
         (valuation, valuation_mapping) = ilp.convert()
+        self.valuation_mapping = valuation_mapping
         self.base_valuation = valuation
         self.deduction_map = {}
+        self.clause_map = {}
         with tf.variable_scope("rule_weights", reuse=tf.AUTO_REUSE):
             for p in [self.language_frame.target] + self.program_template.p_a:
                 rule_manager = Optimized_Combinatorial_Generator(
                     self.program_template.p_a + [self.language_frame.target], self.program_template.rules[p], p, self.language_frame.p_e)
                 generated = rule_manager.generate_clauses()
+                self.clause_map[p] = generated
                 self.rule_weights[p] = tf.get_variable(p.predicate + "_rule_weights",
                                                        [len(generated[0]), len(
                                                            generated[1])],
@@ -68,7 +71,33 @@ class DILP():
     def __all_variables(self):
         return [weights for weights in self.rule_weights.values()]
 
-    def train(self, steps=300, name=None):
+    def show_atoms(self, valuation):
+        result = {}
+        for atom in self.valuation_mapping:
+            if atom in self.positive:
+                print('%s Expected: 1 %.3f' %
+                      (str(atom), valuation[self.valuation_mapping[atom]]))
+            elif atom in self.negative:
+                print('%s Expected: 0 %.3f' %
+                      (str(atom), valuation[self.valuation_mapping[atom]]))
+
+    def show_definition(self):
+        for predicate in self.rule_weights:
+            shape = self.rule_weights[predicate].shape
+            rule_weights = tf.reshape(self.rule_weights[predicate], [-1])
+            weights = tf.reshape(tf.nn.softmax(rule_weights)[:, None], shape)
+            print('----------------------------')
+            print(str(predicate))
+            clauses = self.clause_map[predicate]
+            indexes = np.nonzero(weights > 0.05)
+            for i in range(len(indexes[0])):
+                print("weight is {}".format(
+                    weights[indexes[0][i], indexes[1][i]]))
+                print(clauses[0][indexes[0][i]])
+                print(clauses[1][indexes[1][i]])
+            print('----------------------------')
+
+    def train(self, steps=300, name='test'):
         """
         :param steps:
         :param name:
@@ -76,14 +105,14 @@ class DILP():
         """
         str2weights = {str(key): value for key,
                        value in self.rule_weights.items()}
-        if name:
-            checkpoint = tfe.Checkpoint(**str2weights)
-            checkpoint_dir = "./model/" + name
-            checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
-            try:
-                checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
-            except Exception as e:
-                print(e)
+        # if name:
+        #     checkpoint = tfe.Checkpoint(**str2weights)
+        #     checkpoint_dir = "./model/" + name
+        #     checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+        #     try:
+        #         checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
+        #     except Exception as e:
+        #         print(e)
 
         losses = []
         optimizer = tf.train.RMSPropOptimizer(learning_rate=0.5)
@@ -96,14 +125,13 @@ class DILP():
             losses.append(loss_avg)
             print("-" * 20)
             print("step " + str(i) + " loss is " + str(loss_avg))
-            # if i % 5 == 0:
-            #     self.show_definition()
-            #     valuation_dict = self.valuation2atoms(self.deduction()).items()
-            #     for atom, value in valuation_dict:
-            #         print(str(atom) + ": " + str(value))
-            #     if name:
-            #         checkpoint.save(checkpoint_prefix)
-            #         pd.Series(np.array(losses)).to_csv(name + ".csv")
+            if i % 5 == 0:
+                # self.show_definition()
+                self.show_atoms(self.deduction())
+                self.show_definition()
+                # if name:
+                # checkpoint.save(checkpoint_prefix)
+                # pd.Series(np.array(losses)).to_csv(name + ".csv")
             print("-" * 20 + "\n")
         return losses
 

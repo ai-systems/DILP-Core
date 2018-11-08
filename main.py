@@ -3,6 +3,8 @@
 from src.core import Term, Atom
 from src.ilp import Language_Frame, Program_Template, Rule_Template
 from src.dilp import DILP
+import tensorflow as tf
+tf.enable_eager_execution()
 
 
 def even_numbers_test():
@@ -26,10 +28,11 @@ def even_numbers_test():
     rules = {p_a[0]: p_a_rule, target: target_rule}
 
     langage_frame = Language_Frame(target, p_e, constants)
-    program_template = Program_Template(p_a, rules, 10)
+    program_template = Program_Template(p_a, rules, 300)
     # program_template = Program_Template(p_a, rules, 300)
 
     dilp = DILP(langage_frame, B, P, N, program_template)
+
     dilp.train()
 
 
