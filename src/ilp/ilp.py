@@ -3,6 +3,7 @@
 
 from src.ilp import Language_Frame, Program_Template
 from src.core import Atom, Term
+import numpy as np
 
 
 class ILP():
@@ -53,10 +54,13 @@ class ILP():
         '''Generate initial valuations
         '''
         ground_atoms = self.generate_ground_atoms()
+        valuation_mapping = {}
         initial_valuation = []
-        for atom in ground_atoms:
+        for idx, atom in enumerate(ground_atoms):
             if atom in self.background:
-                initial_valuation.append((atom, 1))
+                initial_valuation.append(1)
+                valuation_mapping[atom] = idx
             else:
-                initial_valuation.append((atom, 0))
-        return initial_valuation
+                initial_valuation.append(0)
+                valuation_mapping[atom] = idx
+        return (np.array(initial_valuation, dtype=np.float32), valuation_mapping)
