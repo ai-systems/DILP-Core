@@ -1,7 +1,7 @@
 '''Descirbe the range programs that can be generated
 '''
 
-from utils import is_intensional, INTENSIONAL_REQUIRED_MESSAGE
+from src.utils import is_intensional, INTENSIONAL_REQUIRED_MESSAGE
 
 
 class Program_Template():
