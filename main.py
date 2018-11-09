@@ -59,6 +59,9 @@ def prdecessor():
     target_rule = (Rule_Template(0, False), Rule_Template(1, True))
     rules = {target: target_rule}
     constants = [str(i) for i in range(0, 10)]
+
+    langage_frame = Language_Frame(target, p_e, constants)
+    program_template = Program_Template(p_a, rules, 10)
     dilp = DILP(langage_frame, B, P, N, program_template)
     dilp.train()
 
