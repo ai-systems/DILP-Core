@@ -56,7 +56,8 @@ def prdecessor():
     p_a = []
 
     target = Atom([term_x_0, term_x_1], 'target')
-    target_rule = (Rule_Template(0, False), Rule_Template(1, True))
+    # target_rule = (Rule_Template(0, False), Rule_Template(1, True))
+    target_rule = (Rule_Template(0, False), None)
     rules = {target: target_rule}
     constants = [str(i) for i in range(0, 10)]
 
