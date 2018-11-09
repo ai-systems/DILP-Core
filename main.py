@@ -76,7 +76,7 @@ def less_than():
     N = []
     for i in range(0, 10):
         for j in range(0, 10):
-            if j < i:
+            if j <= i:
                 N.append(
                     Atom([Term(False, str(j)), Term(False, str(i))], 'target'))
             else:
