@@ -97,7 +97,7 @@ class DILP():
                 print(clauses[1][indexes[1][i]])
             print('----------------------------')
 
-    def train(self, steps=300, name='test'):
+    def train(self, steps=301, name='test'):
         """
         :param steps:
         :param name:
