@@ -29,7 +29,7 @@ def even_numbers_test():
 
     langage_frame = Language_Frame(target, p_e, constants)
     program_template = Program_Template(p_a, rules, 10)
-    # program_template = Program_Template(p_a, rules, 300)
+    #program_template = Program_Template(p_a, rules, 300)
 
     dilp = DILP(langage_frame, B, P, N, program_template)
 
@@ -101,4 +101,6 @@ def less_than():
     dilp.train()
 
 
-less_than()
+even_numbers_test()
+# less_than()
+# prdecessor()
