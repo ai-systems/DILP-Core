@@ -89,12 +89,19 @@ class DILP():
             print('----------------------------')
             print(str(predicate))
             clauses = self.clause_map[predicate]
-            indexes = np.nonzero(weights > 0.05)
+            pos = np.unravel_index(
+                np.argmax(weights, axis=None), weights.shape)
+            print(clauses[0][pos[0]])
+            print(clauses[1][pos[1]])
+
+            '''
             for i in range(len(indexes[0])):
-                print("weight is {}".format(
-                    weights[indexes[0][i], indexes[1][i]]))
+                if(weights[indexes[0][i], indexes[1][i]] > max_weights):
+                    max_weights = weights[indexes[0][i],
+                                          indexes[1][i]] > max_weights
                 print(clauses[0][indexes[0][i]])
                 print(clauses[1][indexes[1][i]])
+            '''
             print('----------------------------')
 
     def train(self, steps=301, name='test'):
@@ -115,7 +122,7 @@ class DILP():
         #         print(e)
 
         losses = []
-        optimizer = tf.train.RMSPropOptimizer(learning_rate=0.5)
+        optimizer = tf.train.RMSPropOptimizer(learning_rate=0.05)
 
         for i in range(steps):
             grads = self.grad()
