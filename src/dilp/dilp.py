@@ -104,7 +104,7 @@ class DILP():
             '''
             print('----------------------------')
 
-    def train(self, steps=301, name='test'):
+    def train(self, steps=501, name='test'):
         """
         :param steps:
         :param name:
@@ -210,6 +210,7 @@ class DILP():
         for clause1 in result_valuations[0]:
             for clause2 in result_valuations[1]:
                 c_p.append(tf.maximum(clause1, clause2))
+
         rule_weights = tf.reshape(rule_weights, [-1])
         prob_rule_weights = tf.nn.softmax(rule_weights)[:, None]
         return tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0)
