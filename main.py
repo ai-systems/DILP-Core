@@ -10,17 +10,18 @@ tf.enable_eager_execution()
 def even_numbers_test():
     B = [Atom([Term(False, '0')], 'zero')] + \
         [Atom([Term(False, str(i)), Term(False, str(i + 1))], 'succ')
-         for i in range(0, 10)]
+         for i in range(0, 20)]
 
-    P = [Atom([Term(False, str(i))], 'target') for i in range(0, 11, 2)]
-    N = [Atom([Term(False, str(i))], 'target') for i in range(1, 11, 2)]
+    P = [Atom([Term(False, str(i))], 'target') for i in range(0, 21, 2)]
+    N = [Atom([Term(False, str(i))], 'target') for i in range(1, 21, 2)]
+    print(P)
     term_x_0 = Term(True, 'X_0')
     term_x_1 = Term(True, 'X_1')
 
     p_e = [Atom([term_x_0], 'zero'), Atom([term_x_0, term_x_1], 'succ')]
     p_a = [Atom([term_x_0, term_x_1], 'pred')]
     target = Atom([term_x_0], 'target')
-    constants = [str(i) for i in range(0, 11)]
+    constants = [str(i) for i in range(0, 21)]
 
     # Define rules for intensional predicates
     p_a_rule = (Rule_Template(1, False), None)
