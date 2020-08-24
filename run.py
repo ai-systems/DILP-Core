@@ -10,7 +10,7 @@ tf.enable_eager_execution()
 
 
 # relationship will refer to 'track' in all of your examples
-relationship = pp.Word(pp.alphas).setResultsName('relationship')
+relationship = pp.Word(pp.alphas).setResultsName('relationship', listAllMatches=True)
 
 number = pp.Word(pp.nums + '.')
 variable = pp.Word(pp.alphas)
@@ -19,13 +19,12 @@ argument = number | variable
 
 # arguments are a delimited list of 'argument' surrounded by parenthesis
 arguments = (pp.Suppress('(') + pp.delimitedList(argument) +
-             pp.Suppress(')')).setResultsName('arguments')
+             pp.Suppress(')')).setResultsName('arguments', listAllMatches=True)
 
 # a fact is composed of a relationship and it's arguments
 # (I'm aware it's actually more complicated than this
 # it's just a simplifying assumption)
-fact = (relationship + arguments).setResultsName('facts',
-                                                 listAllMatches=True)
+fact = (relationship + arguments).setResultsName('facts', listAllMatches=True)
 
 # a sentence is a fact plus a period
 sentence = fact + pp.Suppress('.')
@@ -37,16 +36,19 @@ prolog_sentences = pp.OneOrMore(sentence)
 def process_file(filename):
     atoms = []
     predicates = set()
+    constants = set()
     with open(filename) as f:
         data = f.read().replace('\n', '')
         result = prolog_sentences.parseString(data)
-        for fact in result['facts']:
-            predicate = fact['relationship']
-            terms = [Term(False, term) for term in fact['arguments']]
-            constants = set([term for term in fact['arguments']])
+        for idx in range(len(result['facts'])):
+            fact = result['facts'][idx]
+            predicate = result['relationship'][idx]
+            terms = [Term(False, term) for term in result['arguments'][idx]]
             term_var = [Term(True, f'X_{i}') for i in range(len(terms))]
+
             predicates.add(Atom(term_var, predicate))
             atoms.append(Atom(terms, predicate))
+            constants.update([term for term in result['arguments'][idx]])
     return atoms, predicates, constants
 
 
