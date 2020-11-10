@@ -4,7 +4,7 @@ from src.core import Term, Atom
 from src.ilp import Language_Frame, Program_Template, Rule_Template
 from src.dilp import DILP
 import tensorflow as tf
-tf.enable_eager_execution()
+tf.compat.v1.enable_eager_execution()
 
 
 def even_numbers_test():

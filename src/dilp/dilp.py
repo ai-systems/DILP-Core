@@ -8,7 +8,7 @@ import tensorflow as tf
 from collections import OrderedDict
 import numpy as np
 from src.utils import printProgressBar
-import tensorflow.contrib.eager as tfe
+#import tensorflow.contrib.eager as tfe # obsolete in TF2
 import os
 
 
@@ -40,16 +40,16 @@ class DILP():
         self.base_valuation = valuation
         self.deduction_map = {}
         self.clause_map = {}
-        with tf.variable_scope("rule_weights", reuse=tf.AUTO_REUSE):
+        with tf.compat.v1.variable_scope("rule_weights", reuse=tf.compat.v1.AUTO_REUSE):
             for p in [self.language_frame.target] + self.program_template.p_a:
                 rule_manager = Optimized_Combinatorial_Generator(
                     self.program_template.p_a + [self.language_frame.target], self.program_template.rules[p], p, self.language_frame.p_e)
                 generated = rule_manager.generate_clauses()
                 self.clause_map[p] = generated
-                self.rule_weights[p] = tf.get_variable(p.predicate + "_rule_weights",
+                self.rule_weights[p] = tf.compat.v1.get_variable(p.predicate + "_rule_weights",
                                                        [len(generated[0]), len(
                                                            generated[1])],
-                                                       initializer=tf.random_normal_initializer,
+                                                       initializer=tf.compat.v1.random_normal_initializer,
                                                        dtype=tf.float32)
                 deduction_matrices = []
                 elm1 = []
@@ -113,7 +113,7 @@ class DILP():
         str2weights = {str(key): value for key,
                        value in self.rule_weights.items()}
         # if name:
-        #     checkpoint = tfe.Checkpoint(**str2weights)
+        #     checkpoint = tf.train.Checkpoint(**str2weights)
         #     checkpoint_dir = "./model/" + name
         #     checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
         #     try:
@@ -122,12 +122,12 @@ class DILP():
         #         print(e)
 
         losses = []
-        optimizer = tf.train.RMSPropOptimizer(learning_rate=0.05)
+        optimizer = tf.compat.v1.train.RMSPropOptimizer(learning_rate=0.05)
 
         for i in range(steps):
             grads = self.grad()
             optimizer.apply_gradients(zip(grads, self.__all_variables()),
-                                      global_step=tf.train.get_or_create_global_step())
+                                      global_step=tf.compat.v1.train.get_or_create_global_step())
             loss_avg = float(self.loss().numpy())
             losses.append(loss_avg)
             print("-" * 20)
@@ -152,18 +152,18 @@ class DILP():
             index = np.random.randint(0, len(labels), batch_size)
             labels = labels[index]
             outputs = tf.gather(outputs, index)
-        loss = -tf.reduce_mean(labels * tf.log(outputs + 1e-10) +
-                               (1 - labels) * tf.log(1 - outputs + 1e-10))
+        loss = -tf.reduce_mean(input_tensor=labels * tf.math.log(outputs + 1e-10) +
+                               (1 - labels) * tf.math.log(1 - outputs + 1e-10))
         return loss
 
     def grad(self):
-        with tfe.GradientTape() as tape:
+        with tf.GradientTape() as tape:
             loss_value = self.loss(-1)
             weight_decay = 0.0
             regularization = 0
             for weights in self.__all_variables():
                 weights = tf.nn.softmax(weights)
-                regularization += tf.reduce_sum(tf.sqrt(weights)
+                regularization += tf.reduce_sum(input_tensor=tf.sqrt(weights)
                                                 ) * weight_decay
             loss_value += regularization / len(self.__all_variables())
         return tape.gradient(loss_value, self.__all_variables())
@@ -213,7 +213,7 @@ class DILP():
 
         rule_weights = tf.reshape(rule_weights, [-1])
         prob_rule_weights = tf.nn.softmax(rule_weights)[:, None]
-        return tf.reduce_sum((tf.stack(c_p) * prob_rule_weights), axis=0)
+        return tf.reduce_sum(input_tensor=(tf.stack(c_p) * prob_rule_weights), axis=0)
 
     @staticmethod
     def inference_single_clause(valuation, X):
@@ -228,4 +228,4 @@ class DILP():
         Y1 = tf.gather_nd(params=valuation, indices=X1)
         Y2 = tf.gather_nd(params=valuation, indices=X2)
         Z = Y1 * Y2
-        return tf.reduce_max(Z, axis=1)
+        return tf.reduce_max(input_tensor=Z, axis=1)
