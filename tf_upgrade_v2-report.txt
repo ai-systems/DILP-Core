@@ -1,0 +1,230 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 25 files
+Detected 1 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: ./src/dilp/dilp.py
+--------------------------------------------------------------------------------
+./src/dilp/dilp.py:49:39: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: '.'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file './run.py'
+ outputting to '../DILP-Core_tf2/run.py'
+--------------------------------------------------------------------------------
+
+9:0: INFO: Renamed 'tf.enable_eager_execution' to 'tf.compat.v1.enable_eager_execution'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './main.py'
+ outputting to '../DILP-Core_tf2/main.py'
+--------------------------------------------------------------------------------
+
+7:0: INFO: Renamed 'tf.enable_eager_execution' to 'tf.compat.v1.enable_eager_execution'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './tests/dilp_test.py'
+ outputting to '../DILP-Core_tf2/tests/dilp_test.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './tests/inference_test.py'
+ outputting to '../DILP-Core_tf2/tests/inference_test.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './tests/ilp_test.py'
+ outputting to '../DILP-Core_tf2/tests/ilp_test.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './tests/core_test.py'
+ outputting to '../DILP-Core_tf2/tests/core_test.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './tests/rule_test.py'
+ outputting to '../DILP-Core_tf2/tests/rule_test.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/utils.py'
+ outputting to '../DILP-Core_tf2/src/utils.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/core/clause.py'
+ outputting to '../DILP-Core_tf2/src/core/clause.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/core/term.py'
+ outputting to '../DILP-Core_tf2/src/core/term.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/core/__init__.py'
+ outputting to '../DILP-Core_tf2/src/core/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/core/atom.py'
+ outputting to '../DILP-Core_tf2/src/core/atom.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/dilp/dilp.py'
+ outputting to '../DILP-Core_tf2/src/dilp/dilp.py'
+--------------------------------------------------------------------------------
+
+43:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+43:53: INFO: Renamed 'tf.AUTO_REUSE' to 'tf.compat.v1.AUTO_REUSE'
+49:39: WARNING: tf.get_variable requires manual check. tf.get_variable returns ResourceVariables by default in 2.0, which have well-defined semantics and are stricter about shapes. You can disable this behavior by passing use_resource=False, or by calling tf.compat.v1.disable_resource_variables().
+49:39: INFO: Renamed 'tf.get_variable' to 'tf.compat.v1.get_variable'
+52:67: INFO: tf.random_normal_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+52:67: INFO: Renamed 'tf.random_normal_initializer' to 'tf.compat.v1.random_normal_initializer'
+125:20: INFO: Renamed 'tf.train.RMSPropOptimizer' to 'tf.compat.v1.train.RMSPropOptimizer'
+130:50: INFO: Renamed 'tf.train.get_or_create_global_step' to 'tf.compat.v1.train.get_or_create_global_step'
+155:16: INFO: Added keywords to args of function 'tf.reduce_mean'
+155:40: INFO: Renamed 'tf.log' to 'tf.math.log'
+156:46: INFO: Renamed 'tf.log' to 'tf.math.log'
+166:34: INFO: Added keywords to args of function 'tf.reduce_sum'
+216:15: INFO: Added keywords to args of function 'tf.reduce_sum'
+231:15: INFO: Added keywords to args of function 'tf.reduce_max'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/dilp/__init__.py'
+ outputting to '../DILP-Core_tf2/src/dilp/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/language_frame.py'
+ outputting to '../DILP-Core_tf2/src/ilp/language_frame.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/__init__.py'
+ outputting to '../DILP-Core_tf2/src/ilp/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/inference.py'
+ outputting to '../DILP-Core_tf2/src/ilp/inference.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/rule_manager.py'
+ outputting to '../DILP-Core_tf2/src/ilp/rule_manager.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/ilp.py'
+ outputting to '../DILP-Core_tf2/src/ilp/ilp.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/generate_rules/combinatorial.py'
+ outputting to '../DILP-Core_tf2/src/ilp/generate_rules/combinatorial.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/generate_rules/__init__.py'
+ outputting to '../DILP-Core_tf2/src/ilp/generate_rules/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/generate_rules/optimized_combinatorial.py'
+ outputting to '../DILP-Core_tf2/src/ilp/generate_rules/optimized_combinatorial.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/template/__init__.py'
+ outputting to '../DILP-Core_tf2/src/ilp/template/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/template/program_template.py'
+ outputting to '../DILP-Core_tf2/src/ilp/template/program_template.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './src/ilp/template/rule_template.py'
+ outputting to '../DILP-Core_tf2/src/ilp/template/rule_template.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
